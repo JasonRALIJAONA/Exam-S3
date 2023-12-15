@@ -24,9 +24,10 @@ function insertData(form){
             alert("Maybe some probleme")
         }
         else{
-            alert(msg);
+            var liste = JSON.parse(xhr.responseText);
+            alert("Succes");
         /// recupere la liste des des donnes soit creation du tableau de donnee
-            loadData();
+            loadData(list);
         }
     });
     xhr.addEventListener('error', function() {
@@ -35,12 +36,24 @@ function insertData(form){
     xhr.send(formData);
 }
 
-function loadData(date){
-    va
-    var list = makeAselect("moyenneCrypto" , `date="${date} && "nom="${nomCry}` , null);
+function loadData(liste){
+    var byt = ['BTC' , 'BEP' , 'WRP' ];
+    for(var i = 0; i < liste.length; i++){
+        if(liste[i].nom == 'BTC'){
+
+        }
+        
+    }
 }
 
-function generateTable(){}
+function generateTable(){
+
+}
+function generateLine(nom){
+    
+    
+    var list = fun(date,nom);
+}
 function reloadPage(){
     var xhr = getSubBrowser();
 
@@ -59,24 +72,5 @@ function reloadPage(){
 }
 
 function makeAselect(table,condition ,action){
-    var xhr = getSubBrowser();
-    var liste ;
-
-    var url = "selection.php?table="+table;
-    if( condition != null) {
-        url += "&condition="+condition;
-    }
-    console.log( url );
-
-    xhr.open('GET',url,false);
-    xhr.onreadystatechange = function () {
-        var readyState = xhr.readyState;
-        if(readyState == 4){
-            liste = JSON.parse(xhr.responseText);
-            if(action != null){
-                action(liste);
-            }
-        }
-    }
-    xhr.send(null);
+    
 }
