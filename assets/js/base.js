@@ -13,30 +13,45 @@ function  getSubBrowser() {
     }
     return xhr;
 }
-
-
-function insertData(formData){
+function insertData(form){
     var xhr = getSubBrowser();
-    var formData = new FormData(formAchat);
-    xhr.open('POST',"file.php");
+    var formData = new FormData(form);
+    xhr.open('POST',"inc/insertion.php");
     xhr.addEventListener('load', function() {
         var msg = xhr.responseText;
         if( xhr.status != 200){
             console.log(msg);
+            alert("Maybe some probleme")
         }
         else{
-            alert(msg); 
+            alert(msg);
+        /// recupere la liste des des donnes soit creation du tableau de donnee
+            loadData();
         }
-});
-
+    });
     xhr.addEventListener('error', function() {
-    alert("Insertion Failed");
-});
-xhr.send(formData);
+        alert("Insertion Failed");  
+    });
+    xhr.send(formData);
 }
-// Recuperation de formulaire
-var formAchat = document.getElementById('formAchat');
-formAchat.addEventListener('submit', function(e){
-e.preventDefault();
-insertAchat();
-});
+
+function loadData(){
+    console.log("Loading");
+}
+
+function reloadPage(){
+    var xhr = getSubBrowser();
+
+    xhr.open("GET","inc/reload.php")
+    xhr.addEventListener("load" , function(){
+        var msg = xhr.responseText;
+        if( xhr.status != 200){
+            console.log(msg);
+            alert("Maybe some probleme")
+        }
+        else{
+            alert(msg);
+        }
+    });
+    xhr.send();
+}
