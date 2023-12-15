@@ -1,17 +1,6 @@
 <?php
 include_once("connexion.php");
 
-function insererAleat ($dateAchat,$produit,$prixUnitaire,$quantite){
-    $sql="INSERT INTO achat VALUES (NULL,'%s','%s','%d','%d')";
-    $sql=sprintf($sql,$dateAchat,$produit,$prixUnitaire,$quantite);
-
-    // Get the PDO connection
-    $pdo = mySQLconnection();
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-}
-
 function getPrixInitial(){
     $sql="SELECT * FROM devise";
 
@@ -37,26 +26,84 @@ function prochainJour($dateString) {
     return $date->format('Y-m-d');
 }
 
-function insertAleat($debut,$range,$ligneAchat,$minAchat,$maxAchat,$ligneVente,$minVente,$maxVente) {
-    $prixbase=getPrixInitial();
-    
-    $aleatAchat=rand($minAchat , $maxAchat);
-    $aleatVente=rand($minVente , $maxVente);
+function refrech(){
 
     // Get the PDO connection
     $pdo = mySQLconnection();
 
-    for ($i=0; $i <$range ; $i++) {
+    $sql="DELETE FROM trans";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
 
-        //Insertion ligne achat 
-        for ($j=0; $j <$ligneAchat ; $j++) { 
-            
-        }
+}
+
+function insertAleat($debut,$range,$ligneAchat,$minAchat,$maxAchat,$ligneVente,$minVente,$maxVente) {
+    $prixbase=getPrixInitial();
+    
+    $aleatVente=rand($minVente , $maxVente);
+    
+    // Get the PDO connection
+    $pdo = mySQLconnection();
+    
+    for ($i=0; $i <$range ; $i++) {
         
-        //insertion ligne vente
-        for ($k=0; $k <$ligneVente ; $k++) { 
-            # code...
+        //boucle pour chaque devise
+        for ($d=1; $d <=3 ; $d++) { 
+            $qteTtotal=0;
+            $produit=0;
+            
+            //Insertion ligne achat 
+            for ($j=0; $j <$ligneAchat ; $j++) { 
+                $sql="INSERT INTO trans VALUES (NULL , '%s' , 'ACHAT' , '%d' , '%d' , '%d')";
+                
+                //prix aleatoire
+                $tempPrix=$prixbase[d-1]['prixInitial'];
+                $min=$prixbase -  ($prixbase * 0.02);
+                $max=$prixbase + ($prixbase * 0.1);
+                $tempPrix=rand($min , $max);
+                
+
+                //quantite aleatoire
+                $aleatAchat=rand($minAchat , $maxAchat);
+
+                $produit=$produit+($tempPrix*$aleatAchat);
+
+                $qteTtotal=$qteTtotal+$aleatAchat;
+
+                $sql=sprintf($sql,$debut,$tempPrix,$aleatAchat,$d);
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+            }
+            
+            //insertion ligne vente
+            for ($k=0; $k <$ligneVente ; $k++) { 
+                $sql="INSERT INTO trans VALUES (NULL , '%s' , 'VENTE' , '%d' , '%d' , '%d')";
+                
+                //prix aleatoire
+                $tempPrix=$prixbase[d-1]['prixInitial'];
+                $min=$prixbase -  ($prixbase * 0.1);
+                $max=$prixbase + ($prixbase * 0.02);
+                $tempPrix=rand($min , $max);
+                
+
+                //quantite aleatoire
+                $aleatVente=rand($minVente , $maxVente);
+                $qteTtotal=$qteTtotal+$aleatVente;
+
+                $produit=$produit+($tempPrix*$aleatVente);
+
+                $sql=sprintf($sql,$debut,$tempPrix,$aleatVente,$d);
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+            }
+            
+            $prixbase[d-1]['prixInitial']=$produit/$qteTtotal;
         }
+
 
         $debut=prochainJour($debut);
     }
