@@ -35,10 +35,12 @@ function insertData(form){
     xhr.send(formData);
 }
 
-function loadData(){
-    console.log("Loading");
+function loadData(date){
+    va
+    var list = makeAselect("moyenneCrypto" , `date="${date} && "nom="${nomCry}` , null);
 }
 
+function generateTable(){}
 function reloadPage(){
     var xhr = getSubBrowser();
 
@@ -54,4 +56,27 @@ function reloadPage(){
         }
     });
     xhr.send();
+}
+
+function makeAselect(table,condition ,action){
+    var xhr = getSubBrowser();
+    var liste ;
+
+    var url = "selection.php?table="+table;
+    if( condition != null) {
+        url += "&condition="+condition;
+    }
+    console.log( url );
+
+    xhr.open('GET',url,false);
+    xhr.onreadystatechange = function () {
+        var readyState = xhr.readyState;
+        if(readyState == 4){
+            liste = JSON.parse(xhr.responseText);
+            if(action != null){
+                action(liste);
+            }
+        }
+    }
+    xhr.send(null);
 }

@@ -19,25 +19,7 @@
     </title>
 
 
-    <script>
-        window.addEventListener("load", function(){
-        /// Button de validatioon
-            var formmulaire = document.getElementById("formmulaireData");
-            formmulaire.addEventListener("submit", function(e){
-                e.preventDefault();
-                insertData(formmulaire);
-            });
-        });
-
-
-        /// Button reload
-        var btnReload = document.getElementById("btnReload");
-        btnReload.addEventListener("click", function(){
-            reloadPage();
-        });
-
-    </script>
-
+   
 </head>
 
 <div class="container">
@@ -49,13 +31,13 @@
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label">Date</label>
-                        <input type="date" class="form-control" name="dateAction" placeholder="01-01-2023">
+                        <input type="date" class="form-control" name="dateAction" value="01-01-2023">
                     </div>
                 </div><!-- Col -->
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label">Nb jour</label>
-                        <input type="number" name="nbJour" min="6" max="10" class="form-control" placeholder="6">
+                        <input type="number" name="nbJour" min="6" max="10" class="form-control" value="6">
                     </div>
                 </div><!-- Col -->
             </div><!-- Row -->
@@ -63,36 +45,37 @@
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label">Nb ligne Achat</label>
-                        <input type="number" name="nbAchat" class="form-control" placeholder="1">
+                        <input type="number" name="nbAchat" class="form-control" value="1">
                     </div>
                 </div><!-- Col -->
                 <div class="col-sm-3">
                     <label class="form-label">Quantite min achat</label>
-                    <input type="number" name="minAchat" min="1" class="form-control" placeholder="1">
+                    <input type="number" name="minAchat" min="1" class="form-control" value="1">
                 </div>
                 <div class="col-sm-3">
                     <label class="form-label">Quantite max achat</label>
-                    <input type="number" name="maxAchat" min="1" class="form-control" placeholder="1">
+                    <input type="number" name="maxAchat" min="1" class="form-control" value="1">
                 </div>
             </div><!-- Row -->
             <div class="row">
                 <div class="col-sm-6">
                     <div class="mb-3">
-                        <label class="form-label">Nb ligne Achat</label>
-                        <input type="number" class="form-control" placeholder="1">
+                        <label class="form-label">Nb ligne Vente</label>
+                        <input type="number" class="form-control" value="1">
                     </div>
                 </div><!-- Col -->
                 <div class="col-sm-3">
                     <label class="form-label">Quantite min vente</label>
-                    <input type="number" min="1" class="form-control" name="minVente" placeholder="1">
+                    <input type="number" min="1" class="form-control" name="minVente" value="1">
                 </div>
                 <div class="col-sm-3">
                     <label class="form-label">Quantite max vente</label>
-                    <input type="number" min="1" class="form-control" name="maxVente" placeholder="1">
+                    <input type="number" min="1" class="form-control" name="maxVente" value="1">
                 </div>
             </div>
+            <button type="submit" id="buttonSubmit" class="btn btn-primary submit">Submit form</button>
         </form>
-        <button type="button" id="buttonSubmit" class="btn btn-primary submit">Submit form</button>
+        
     </div>
     </div>
 <div class="card">
@@ -283,6 +266,23 @@ new Chart("myChart", {
   }
 });
 </script>
+
+<script>
+    window.addEventListener("load", function(){
+    /// Button de validatioon
+        var formmulaire = document.getElementById("formulaireData");
+        formmulaire.addEventListener("submit", function(e){
+            e.preventDefault();
+            insertData(formmulaire);
+        });
+    /// Button reload
+        var btnReload = document.getElementById("btnReload");
+        btnReload.addEventListener("click", function(){
+        reloadPage();
+        });
+    });
+</script>
+
 </body>
 
 </html>
