@@ -58,9 +58,9 @@ function insertAleat($debut,$range,$ligneAchat,$minAchat,$maxAchat,$ligneVente,$
                 $sql="INSERT INTO trans VALUES (NULL , '%s' , 'ACHAT' , '%d' , '%d' , '%d')";
                 
                 //prix aleatoire
-                $tempPrix=$prixbase[d-1]['prixInitial'];
-                $min=$prixbase -  ($prixbase * 0.02);
-                $max=$prixbase + ($prixbase * 0.1);
+                $tempPrix=$prixbase[$d-1]['prixInitial'];
+                $min=$prixbase[$d-1]['prixInitial'] -  ($prixbase[$d-1]['prixInitial'] * 0.02);
+                $max=$prixbase[$d-1]['prixInitial'] + ($prixbase[$d-1]['prixInitial'] * 0.1);
                 $tempPrix=rand($min , $max);
                 
 
@@ -71,7 +71,7 @@ function insertAleat($debut,$range,$ligneAchat,$minAchat,$maxAchat,$ligneVente,$
 
                 $qteTtotal=$qteTtotal+$aleatAchat;
 
-                $sql=sprintf($sql,$debut,$tempPrix,$aleatAchat,$d);
+                $sql=sprintf($sql,$debut,$tempPrix,$aleatAchat,$$d);
 
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute();
@@ -80,12 +80,12 @@ function insertAleat($debut,$range,$ligneAchat,$minAchat,$maxAchat,$ligneVente,$
             
             //insertion ligne vente
             for ($k=0; $k <$ligneVente ; $k++) { 
-                $sql="INSERT INTO trans VALUES (NULL , '%s' , 'VENTE' , '%d' , '%d' , '%d')";
+                $sql="INSERT INTO trans VALUES (NULL , '%s' , 'VENTE' , '%$d' , '%d' , '%d')";
                 
                 //prix aleatoire
-                $tempPrix=$prixbase[d-1]['prixInitial'];
-                $min=$prixbase -  ($prixbase * 0.1);
-                $max=$prixbase + ($prixbase * 0.02);
+                $tempPrix=$prixbase[$d-1]['prixInitial'][$d-1]['prixInitial'];
+                $min=$prixbase[$d-1]['prixInitial'] -  ($prixbase[$d-1]['prixInitial'] * 0.1);
+                $max=$prixbase[$d-1]['prixInitial'] + ($prixbase[$d-1]['prixInitial'] * 0.02);
                 $tempPrix=rand($min , $max);
                 
 
@@ -101,7 +101,7 @@ function insertAleat($debut,$range,$ligneAchat,$minAchat,$maxAchat,$ligneVente,$
                 $stmt->execute();
             }
             
-            $prixbase[d-1]['prixInitial']=$produit/$qteTtotal;
+            $prixbase[$d-1]['prixInitial']=$produit/$qteTtotal;
         }
 
 
